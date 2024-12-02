@@ -1,0 +1,158 @@
+****************
+* Project number/name
+* Class
+* Date
+* Your name
+**************** 
+
+OVERVIEW:
+
+ Concisely explain what the program does. If this exceeds a couple
+ of sentences, you're going too far. The details go in other
+ sections.
+
+
+INCLUDED FILES:
+
+ List the files required for the project with a brief
+ explanation of why each is included.
+
+ e.g.
+ * Class1.java - source file
+ * Class2.java - source file
+ * README - this file
+
+
+COMPILING AND RUNNING:
+
+ Give the command for compiling the program, the command
+ for running the program, and any usage instructions the
+ user needs.
+ 
+ These are command-line instructions for a system like onyx.
+ They have nothing to do with Eclipse or any other IDE. They
+ must be specific - assume the user has Java installed, but
+ has no idea how to compile or run a Java program from the
+ command-line.
+ 
+ e.g.
+ From the directory containing all source files, compile the
+ driver class (and all dependencies) with the command:
+ $ javac Class1.java
+
+ Run the compiled class file with the command:
+ $ java Class1
+
+ Console output will give the results after the program finishes.
+
+ ANALYSIS
+
+ i. If a stack is used as the storage structure, one path will be
+ explored until it reaches the end, a point where it is adjacent to the spot
+ that has a 2 (depth-first). This is because the first element of the stack will
+ be popped off the stack, then the program will generate 1 or more
+ new paths to explore. Those new paths get added to the top of thes stack,
+ then they are popped off and new paths generated from those points. The
+ first path, which is sitting at the bottom of the stack, won't be popped
+ off until all the paths generated from the second (or third or fourth, 
+ depending on starting board structure) have been finished.
+ When using a queue, every path will be explored at the same rate (breadth-first). The 
+ program will look at the first path, then generate new paths from that point
+ and add it to the back of the queue. Then, the second path will be explored
+ and so on for all possible path options. Then, the program will get to the
+ new set of paths from the first path, look at each, then generate new paths.
+ Then the second, and so on. So each possible path will move along together,
+ rather than finishing one and then looking at the next.
+
+ ii. The total number of search states is not affected by the choice of
+ storage structure. The same paths will be search using a stack or queue,
+ the difference is how each path is traced through time. If there are six
+ possible paths, both structures will search six paths. The stack will trace one
+ path to completion, then the next to completion, and so on (depth-first). The queue will
+ trace all paths sequentially, starting with the first path and adding a step,
+ then the second path and adding a step, until all paths have been looked at. Then it
+ will start with the first path and its children and add on steps to all children, then
+ look at the second step and its children and add on steps to all children, etc until
+ each path has reached an end point (breadth-first).
+
+ iii. Since the search algorithm is going to find every possible path regardless of
+ underlying storage structure, the solution will not be found in fewer steps using a 
+ stack or a queue.
+
+ iv. Using a queue, or breadth-first method, guarantees the first solution found is the
+ shortest path. This is because you are stepping through all paths at the same time. So if
+ one solution is found after taking two steps, you know that's the shortest path compared
+ to the other possible paths that haven't found a solution yet.
+ With a stack, there's no guarantee you've found the shortest path when you've found the first
+ solution. The first solution is essentially random, and could be the shortest path or could
+ equally likely be the longest path.
+
+ v. Memory use is very different depending on storage choice. In the stack, you will
+ have fewer items in Storage most of the time. This is because the stack is depth-first,
+ and you will only generate 1-3 new paths each run through the while loop. In the queue,
+ which is breadth-first, your number of possible paths that are sitting in Storage
+ waiting to be reviewed grows larger with each step you take. Towards the end of the
+ analysis, you will have many branches of the possible paths that you could take.
+
+ vi. The Big O runtime for these search algorithms is linear because we visit each position once,
+ and once each of those combinations of position + next position is explored, we don't revisit
+ that position. N, the primary input factor increasing the difficulty of the task, is
+ the number of open positions on the board. Even if 1 and 2 are very close to each other, the
+ search algorithm is going to search every possible path. If there are a lot of open positions
+ on the board, then the number of possible paths begins to increase, increasing the difficulty 
+ of the search.
+
+
+PROGRAM DESIGN AND IMPORTANT CONCEPTS:
+
+ This is the sort of information someone who really wants to
+ understand your program - possibly to make future enhancements -
+ would want to know.
+
+ Explain the main concepts and organization of your program so that
+ the reader can understand how your program works. This is not a repeat
+ of javadoc comments or an exhaustive listing of all methods, but an
+ explanation of the critical algorithms and object interactions that make
+ up the program.
+
+ Explain the main responsibilities of the classes and interfaces that make
+ up the program. Explain how the classes work together to achieve the program
+ goals. If there are critical algorithms that a user should understand, 
+ explain them as well.
+ 
+ If you were responsible for designing the program's classes and choosing
+ how they work together, why did you design the program this way? What, if 
+ anything, could be improved? 
+
+TESTING:
+
+ How did you test your program to be sure it works and meets all of the
+ requirements? What was the testing strategy? What kinds of tests were run?
+ Can your program handle bad input? Is your program  idiot-proof? How do you 
+ know? What are the known issues / bugs remaining in your program?
+
+
+DISCUSSION:
+ 
+ Discuss the issues you encountered during programming (development)
+ and testing. What problems did you have? What did you have to research
+ and learn on your own? What kinds of errors did you get? How did you 
+ fix them?
+ 
+ What parts of the project did you find challenging? Is there anything
+ that finally "clicked" for you in the process of working on this project?
+ 
+ 
+EXTRA CREDIT:
+
+ If the project had opportunities for extra credit that you attempted,
+ be sure to call it out so the grader does not overlook it.
+
+
+----------------------------------------------------------------------------
+
+All content in a README file is expected to be written in clear English with
+proper grammar, spelling, and punctuation. If you are not a strong writer,
+be sure to get someone else to help you with proofreading. Consider all project
+documentation to be professional writing for your boss and/or potential
+customers.
