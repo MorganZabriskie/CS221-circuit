@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * Represents a 2D circuit board as read from an input file.
  *  
- * @author mvail
+ * @author mvail, mzabriskie
  */
 public class CircuitBoard {
 	/** current contents of the board */
@@ -42,16 +42,56 @@ public class CircuitBoard {
 	 * @throws FileNotFoundException if Scanner cannot open or read the file
 	 * @throws InvalidFileFormatException for any file formatting or content issue
 	 */
-	public CircuitBoard(String filename) throws FileNotFoundException {
+	public CircuitBoard(String filename) throws FileNotFoundException, InvalidFileFormatException {
 		Scanner fileScan = new Scanner(new File(filename));
-		
-		//TODO: parse the given file to populate the char[][]
-		// throw FileNotFoundException if Scanner cannot read the file
-		// throw InvalidFileFormatException if any issues are encountered while parsing the file
-		
-		ROWS = 0; //replace with initialization statements using values from file
-		COLS = 0;
-		
+
+		// initialize rows and columns from input file
+		ROWS = fileScan.nextInt();
+		System.out.println("Num rows is " + ROWS);
+		COLS = fileScan.nextInt();
+		System.out.println("Num cols is " + COLS);
+		fileScan.nextLine();
+		board = new char[ROWS][COLS];
+		int oneCount = 0;
+		int twoCount = 0;
+
+		// read each row and store each character in the char[][]
+		for(int i = 0; i < ROWS; i++) {
+			String line = fileScan.nextLine();
+			System.out.println("Data in line " + i + " is " + line);
+			Scanner fileLineScan = new Scanner(line);
+			fileLineScan.useDelimiter("\\s");
+
+			for (int j = 0; j < COLS; j++) {
+				String nextChar = fileLineScan.next();
+				char tempChar = nextChar.charAt(0);
+				System.out.println("Char at column " + j + " is " + tempChar);
+				if(tempChar == 'O' || tempChar == 'X' || tempChar == '1' || tempChar == '2') { // check elements are allowed on board
+					board[i][j] = tempChar;
+					if(tempChar == '1') {
+						oneCount++;
+					}
+					if(tempChar == '2') {
+						twoCount++;
+					}
+				} else {
+					fileLineScan.close();
+					throw new InvalidFileFormatException("File contains elements that aren't allowed in circuit board");
+				}
+			}
+			//check there aren't more columns than there should be
+			if(fileLineScan.hasNext()) {
+				fileLineScan.close();
+				throw new InvalidFileFormatException("File doesn't have correct format");
+			}
+			fileLineScan.close();
+		}
+		// check there aren't too many rows
+		if (fileScan.hasNext() || oneCount != 1 || twoCount != 1) {
+			fileScan.close();
+			throw new InvalidFileFormatException("File doesn't have correct format");
+		}
+
 		fileScan.close();
 	}
 	
