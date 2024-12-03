@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "CircuitTracer",
+            "request": "launch",
+            "mainClass": "CircuitTracer",
+            "projectName": "CS221-circuit_5c19fa12"
+        },
+        {
+            "type": "java",
+            "name": "CircuitTracerTester",
+            "request": "launch",
+            "mainClass": "CircuitTracerTester",
+            "projectName": "CS221-circuit_5c19fa12",
+            "args": "${command:SpecifyProgramArgs}"
+        },
+        {
+            "type": "java",
+            "name": "MorganDriver",
+            "request": "launch",
+            "mainClass": "MorganDriver",
+            "projectName": "CS221-circuit_5c19fa12"
+        }
+    ]
+}

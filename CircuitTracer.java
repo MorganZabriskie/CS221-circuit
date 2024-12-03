@@ -1,5 +1,8 @@
 import java.awt.Point;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Stack;
 
 /**
  * Search for shortest paths between start and end points on a circuit board
@@ -21,6 +24,8 @@ public class CircuitTracer {
 	public static void main(String[] args) {
 		new CircuitTracer(args); //create this with args
 	}
+
+	private Storage<TraceState> stateStore;
 
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
@@ -53,21 +58,34 @@ public class CircuitTracer {
 			System.out.println("GUI mode not supported. Please run in console mode.");
 			return;
 		}
-		//TODO: initialize the Storage to use either a stack or queue
+
+		// initialize storage to use stack or queue depending on input
 		if(args[0] == "-s") {
-			//call stack algorithm
+			stateStore = Storage.getStackInstance();
+		}
+		if(args[0] == "-q") {
+			stateStore = Storage.getQueueInstance();
 		}
 
-		if(args[0] == "-q") {
-			//call queue algorithm
-		}
-		//TODO: read in the CircuitBoard from the given file
+		//read in the CircuitBoard from the given file
 		String fileName = args[2];
+		try {
+            CircuitBoard myBoard = new CircuitBoard(fileName);
+			System.out.println("Board is valid");
+			System.out.println(myBoard.toString());
+        } catch (FileNotFoundException e) {
+            System.out.println("File is not found");
+        } catch (InvalidFileFormatException e) {
+            System.out.println("File is not in correct format. Please fix and try again.");
+        } catch (NoSuchElementException e) {
+            System.out.println("File is not in correct format. Please fix and try again.");
+        }
+
 		//TODO: run the search for best paths
+		//call search algorithm
 		//TODO: output results to console or GUI, according to specified choice
 	}
 
-	//TODO: write method for stack algorithm
-	//TODO: write method for queue algorithm
+	//TODO: write method for search algorithm
 	
 } // class CircuitTracer
