@@ -74,6 +74,12 @@ public class CircuitBoard {
 					if(tempChar == END) {
 						twoCount++;
 					}
+					if(tempChar == START) {
+						startingPoint = new Point(i, j);
+					}
+					if(tempChar == END) {
+						endingPoint = new Point(i,j);
+					}
 				} else {
 					fileLineScan.close();
 					throw new InvalidFileFormatException("File contains elements that aren't allowed in circuit board");

@@ -1,6 +1,7 @@
 import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
@@ -74,8 +75,8 @@ public class CircuitTracer {
 			//System.out.println("Board is valid");
 			//System.out.println(myBoard.toString());
 
-			// TODO: run the search for best paths
-			// call search algorithm
+			// run the search for best paths
+			findPath(myBoard, stateStore);
 			// TODO: output results to console or GUI, according to specified choice
         } catch (FileNotFoundException e) {
             System.out.println("File is not found");
@@ -87,5 +88,30 @@ public class CircuitTracer {
 	}
 
 	//TODO: write method for search algorithm
+	private void findPath(CircuitBoard startingBoard, Storage<TraceState> stateStore) {
+		// initialize empty list
+		List<TraceState> bestPaths = new ArrayList<TraceState>();
+
+		// add TraceState object to stateStore for each open position adjacent to starting component
+		TraceState newPath = new TraceState(startingBoard, 0, 1); //TODO: fix so it's all open adjacent to starting point
+		stateStore.store(newPath);
+
+		while(!stateStore.isEmpty()) {
+			TraceState currentPath = stateStore.retrieve();
+			System.out.println("Current path is: ");
+			System.out.println(currentPath.getBoard());
+			if(currentPath.isSolution()) {
+				if(bestPaths.isEmpty()) { // TODO: add check for bestpaths path length
+					bestPaths.add(currentPath);
+				} else if (currentPath.pathLength() < bestPaths.get(0).pathLength()) { //TODO: fix length
+					bestPaths.clear();
+					bestPaths.add(currentPath);
+				}
+			} else {
+				//TODO: find all paths and generate new tracestates, adding them to statestorage
+			}
+		}
+
+	}
 	
 } // class CircuitTracer
