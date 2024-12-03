@@ -47,9 +47,9 @@ public class CircuitBoard {
 
 		// initialize rows and columns from input file
 		ROWS = fileScan.nextInt();
-		System.out.println("Num rows is " + ROWS);
+		//System.out.println("Num rows is " + ROWS);
 		COLS = fileScan.nextInt();
-		System.out.println("Num cols is " + COLS);
+		//System.out.println("Num cols is " + COLS);
 		fileScan.nextLine();
 		board = new char[ROWS][COLS];
 		int oneCount = 0;
@@ -58,14 +58,14 @@ public class CircuitBoard {
 		// read each row and store each character in the char[][]
 		for(int i = 0; i < ROWS; i++) {
 			String line = fileScan.nextLine();
-			System.out.println("Data in line " + i + " is " + line);
+			//System.out.println("Data in line " + i + " is " + line);
 			Scanner fileLineScan = new Scanner(line);
 			fileLineScan.useDelimiter("\\s");
 
 			for (int j = 0; j < COLS; j++) {
 				String nextChar = fileLineScan.next();
 				char tempChar = nextChar.charAt(0);
-				System.out.println("Char at column " + j + " is " + tempChar);
+				//System.out.println("Char at column " + j + " is " + tempChar);
 				if(tempChar == OPEN || tempChar == CLOSED || tempChar == START || tempChar == END) { // check elements are allowed on board
 					board[i][j] = tempChar;
 					if(tempChar == START) {

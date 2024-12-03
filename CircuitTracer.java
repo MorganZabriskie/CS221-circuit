@@ -50,20 +50,20 @@ public class CircuitTracer {
 			printUsage();
 			return; //exit the constructor immediately
 		}
-		if((!(args[0] == "-s") || !(args[0] == "-q")) || (!(args[1] == "-c") || !(args[1] == "-g"))) {
+		if((!(args[0].equals("-s")) && !(args[0].equals("-q"))) || (!(args[1].equals("-c")) && !(args[1].equals("-g")))) {
 			printUsage();
 			return;
 		}
-		if (args[1] == "-g") {
+		if (args[1].equals("-g")) {
 			System.out.println("GUI mode not supported. Please run in console mode.");
 			return;
 		}
 
 		// initialize storage to use stack or queue depending on input
-		if(args[0] == "-s") {
+		if(args[0].equals("-s")) {
 			stateStore = Storage.getStackInstance();
 		}
-		if(args[0] == "-q") {
+		if(args[0].equals("-q")) {
 			stateStore = Storage.getQueueInstance();
 		}
 
@@ -71,19 +71,19 @@ public class CircuitTracer {
 		String fileName = args[2];
 		try {
             CircuitBoard myBoard = new CircuitBoard(fileName);
-			System.out.println("Board is valid");
-			System.out.println(myBoard.toString());
+			//System.out.println("Board is valid");
+			//System.out.println(myBoard.toString());
+
+			// TODO: run the search for best paths
+			// call search algorithm
+			// TODO: output results to console or GUI, according to specified choice
         } catch (FileNotFoundException e) {
             System.out.println("File is not found");
         } catch (InvalidFileFormatException e) {
             System.out.println("File is not in correct format. Please fix and try again.");
         } catch (NoSuchElementException e) {
             System.out.println("File is not in correct format. Please fix and try again.");
-        }
-
-		//TODO: run the search for best paths
-		//call search algorithm
-		//TODO: output results to console or GUI, according to specified choice
+        }	
 	}
 
 	//TODO: write method for search algorithm

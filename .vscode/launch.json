@@ -8,14 +8,16 @@
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "${file}",
+            "args": "${command:SpecifyProgramArgs}"
         },
         {
             "type": "java",
             "name": "CircuitTracer",
             "request": "launch",
             "mainClass": "CircuitTracer",
-            "projectName": "CS221-circuit_5c19fa12"
+            "projectName": "CS221-circuit_5c19fa12",
+            "args": "${command:SpecifyProgramArgs}"
         },
         {
             "type": "java",
