@@ -8,6 +8,7 @@ public class MorganDriver {
             CircuitBoard myBoard = new CircuitBoard(fileName);
             System.out.println("Board is valid");
             System.out.println(myBoard.toString());
+
         } catch (FileNotFoundException e) {
             System.out.println("File is not found");
         } catch (InvalidFileFormatException e) {

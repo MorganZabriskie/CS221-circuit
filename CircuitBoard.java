@@ -66,12 +66,12 @@ public class CircuitBoard {
 				String nextChar = fileLineScan.next();
 				char tempChar = nextChar.charAt(0);
 				System.out.println("Char at column " + j + " is " + tempChar);
-				if(tempChar == 'O' || tempChar == 'X' || tempChar == '1' || tempChar == '2') { // check elements are allowed on board
+				if(tempChar == OPEN || tempChar == CLOSED || tempChar == START || tempChar == END) { // check elements are allowed on board
 					board[i][j] = tempChar;
-					if(tempChar == '1') {
+					if(tempChar == START) {
 						oneCount++;
 					}
-					if(tempChar == '2') {
+					if(tempChar == END) {
 						twoCount++;
 					}
 				} else {
