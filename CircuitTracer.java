@@ -40,7 +40,7 @@ public class CircuitTracer {
 	 * @param args command line arguments passed through from main()
 	 */
 	public CircuitTracer(String[] args) {
-		//TODO: parse and validate command line args - first validation provided
+		//parse and validate command line args
 		if (args.length != 3) {
 			printUsage();
 			return; //exit the constructor immediately
@@ -62,8 +62,12 @@ public class CircuitTracer {
 			//call queue algorithm
 		}
 		//TODO: read in the CircuitBoard from the given file
+		String fileName = args[2];
 		//TODO: run the search for best paths
 		//TODO: output results to console or GUI, according to specified choice
 	}
+
+	//TODO: write method for stack algorithm
+	//TODO: write method for queue algorithm
 	
 } // class CircuitTracer
