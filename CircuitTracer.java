@@ -93,6 +93,12 @@ public class CircuitTracer {
 		List<TraceState> bestPaths = new ArrayList<TraceState>();
 
 		// add TraceState object to stateStore for each open position adjacent to starting component
+		int startRow = (int) startingBoard.getStartingPoint().getX();
+		int startCol = (int) startingBoard.getStartingPoint().getY();
+		System.out.println("Starting row is " + startRow);
+		System.out.println("Starting col is: " + startCol);
+
+		//TODO: add check for all open positions
 		TraceState newPath = new TraceState(startingBoard, 0, 1); //TODO: fix so it's all open adjacent to starting point
 		stateStore.store(newPath);
 
@@ -101,12 +107,13 @@ public class CircuitTracer {
 			System.out.println("Current path is: ");
 			System.out.println(currentPath.getBoard());
 			if(currentPath.isSolution()) {
-				if(bestPaths.isEmpty()) { // TODO: add check for bestpaths path length
+				if(bestPaths.isEmpty() || (currentPath.pathLength() == bestPaths.get(0).pathLength())) { 
 					bestPaths.add(currentPath);
 				} else if (currentPath.pathLength() < bestPaths.get(0).pathLength()) { //TODO: fix length
 					bestPaths.clear();
 					bestPaths.add(currentPath);
 				}
+				System.out.println("bestPaths now contains " + bestPaths.toString());
 			} else {
 				//TODO: find all paths and generate new tracestates, adding them to statestorage
 			}
