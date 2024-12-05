@@ -95,63 +95,95 @@ public class CircuitTracer {
 		// add TraceState object to stateStore for each open position adjacent to starting component
 		int startRow = (int) startingBoard.getStartingPoint().getX();
 		int startCol = (int) startingBoard.getStartingPoint().getY();
-		System.out.println("Starting row is " + startRow);
-		System.out.println("Starting col is: " + startCol);
+		//System.out.println("Starting row is " + startRow);
+		//System.out.println("Starting col is: " + startCol);
 
-		// add path to all open positions around start
-		findOpenPaths(startingBoard, startRow, startCol);
-		//TraceState newPath = new TraceState(startingBoard, 0, 1);
-		//stateStore.store(newPath);
-
-		while(!stateStore.isEmpty()) {
-			TraceState currentPath = stateStore.retrieve();
-			System.out.println("Current path is: ");
-			System.out.println(currentPath.getBoard());
-			System.out.println("Current path length is: " + currentPath.pathLength());
-			int currPathStartRow = currentPath.getRow();
-			int currPathStartCol = currentPath.getCol();
-			System.out.println("Current path starting point is " + currPathStartRow + "," + currPathStartCol);
-			if(currentPath.isSolution()) {
-				System.out.println("Current path is a solution!");
-				if(bestPaths.isEmpty() || (currentPath.pathLength() == bestPaths.get(0).pathLength())) { 
-					bestPaths.add(currentPath);
-				} else if (currentPath.pathLength() < bestPaths.get(0).pathLength()) {
-					bestPaths.clear();
-					bestPaths.add(currentPath);
-				}
-				System.out.println("bestPaths now contains: " + bestPaths.size() + " paths");
-			} else {
-				findOpenPaths(currentPath.getBoard(), currPathStartRow, currPathStartCol);
-			}
-			System.out.println("-------------------");
-			System.out.println();
-		}
-
-	}
-	
-	private void findOpenPaths(CircuitBoard startingBoard, int startRow, int startCol) {
-		if(startingBoard.isOpen((startRow - 1), startCol)) {
+		if (startingBoard.isOpen((startRow - 1), startCol)) {
 			TraceState newPath = new TraceState(startingBoard, (startRow - 1), startCol);
 			stateStore.store(newPath);
-			System.out.println("Created new path at " + (startRow - 1) + "," + startCol);
+			//System.out.println("Created new path at " + (startRow - 1) + "," + startCol);
 		}
 
 		if (startingBoard.isOpen((startRow + 1), startCol)) {
 			TraceState newPath = new TraceState(startingBoard, (startRow + 1), startCol);
 			stateStore.store(newPath);
-			System.out.println("Created new path at " + (startRow + 1) + "," + startCol);
+			//System.out.println("Created new path at " + (startRow + 1) + "," + startCol);
 		}
 
 		if (startingBoard.isOpen(startRow, (startCol - 1))) {
 			TraceState newPath = new TraceState(startingBoard, startRow, (startCol - 1));
 			stateStore.store(newPath);
-			System.out.println("Created new path at " + startRow + "," + (startCol -1));
+			//System.out.println("Created new path at " + startRow + "," + (startCol - 1));
 		}
 
 		if (startingBoard.isOpen(startRow, (startCol + 1))) {
 			TraceState newPath = new TraceState(startingBoard, startRow, (startCol + 1));
 			stateStore.store(newPath);
-			System.out.println("Created new path at " + startRow + "," + (startCol + 1));
+			//System.out.println("Created new path at " + startRow + "," + (startCol + 1));
+		}
+
+		while(!stateStore.isEmpty()) {
+			TraceState currentPath = stateStore.retrieve();
+			//System.out.println("Current path is: ");
+			//System.out.println(currentPath.getBoard());
+			//System.out.println("Current path length is: " + currentPath.getPath().size());
+			
+			int currPathStartRow = currentPath.getRow();
+			int currPathStartCol = currentPath.getCol();
+			//System.out.println("Current path starting point is " + currPathStartRow + "," + currPathStartCol);
+			
+			if(currentPath.isSolution()) {
+				//System.out.println("Current path is a solution!");
+				//System.out.println("Path length is: " + currentPath.pathLength());
+				if(bestPaths.isEmpty() || (currentPath.pathLength() == bestPaths.get(0).pathLength())) { 
+					bestPaths.add(currentPath);
+					//System.out.println("This path is as good as past paths, and has been added to bestPaths");
+				} else if (currentPath.pathLength() < bestPaths.get(0).pathLength()) {
+					bestPaths.clear();
+					bestPaths.add(currentPath);
+					//System.out.println("This is the new best path. bestPaths cleared and this path added");
+				}
+				//System.out.println("shortest path is " + bestPaths.get(0).pathLength());
+				//System.out.println("bestPaths now contains: " + bestPaths.size() + " paths");
+			} else {
+				findOpenPaths(currentPath, currPathStartRow, currPathStartCol);
+			}
+			//System.out.println("-------------------");
+			//System.out.println();
+		}
+		if(bestPaths.size() == 0) {
+			System.out.println("Search is completed. No solutions found for the given board.");
+		} else {
+			System.out.println("Search is done. " + bestPaths.size() + " solution(s) found. Shortest path is " + bestPaths.get(0).pathLength());
+			for(int i = 0; i < bestPaths.size(); i++) {
+				System.out.println(bestPaths.get(i).toString());
+			}
+		}
+	}
+	
+	private void findOpenPaths(TraceState currentPath, int startRow, int startCol) {
+		if(currentPath.getBoard().isOpen((startRow - 1), startCol)) {
+			TraceState newPath = new TraceState(currentPath, (startRow - 1), startCol);
+			stateStore.store(newPath);
+			//System.out.println("Created new path at " + (startRow - 1) + "," + startCol);
+		}
+
+		if (currentPath.getBoard().isOpen((startRow + 1), startCol)) {
+			TraceState newPath = new TraceState(currentPath, (startRow + 1), startCol);
+			stateStore.store(newPath);
+			//System.out.println("Created new path at " + (startRow + 1) + "," + startCol);
+		}
+
+		if (currentPath.getBoard().isOpen(startRow, (startCol - 1))) {
+			TraceState newPath = new TraceState(currentPath, startRow, (startCol - 1));
+			stateStore.store(newPath);
+			//System.out.println("Created new path at " + startRow + "," + (startCol -1));
+		}
+
+		if (currentPath.getBoard().isOpen(startRow, (startCol + 1))) {
+			TraceState newPath = new TraceState(currentPath, startRow, (startCol + 1));
+			stateStore.store(newPath);
+			//System.out.println("Created new path at " + startRow + "," + (startCol + 1));
 		}
 	}
 } // class CircuitTracer
