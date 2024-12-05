@@ -73,8 +73,13 @@ COMPILING AND RUNNING:
  each path has reached an end point (breadth-first).
 
  iii. Since the search algorithm is going to find every possible path regardless of
- underlying storage structure, the solution will not be found in fewer steps using a 
- stack or a queue.
+ underlying storage structure, there is no sure way to know if a stack or queue will
+ work better. However, it's more likely that a queue will find a solution first since it's
+ looking at all paths equally. Since it's looking at all paths, it may find a solution
+ before a stack would, unless the stack method happens to look at the exact shortest path
+ first. In terms of total number of steps to look at all solutions, both are the same because
+ all paths will be explored. If it was which method is more likely to find a path first,
+ it would be a queue.
 
  iv. Using a queue, or breadth-first method, guarantees the first solution found is the
  shortest path. This is because you are stepping through all paths at the same time. So if
@@ -91,13 +96,14 @@ COMPILING AND RUNNING:
  waiting to be reviewed grows larger with each step you take. Towards the end of the
  analysis, you will have many branches of the possible paths that you could take.
 
- vi. The Big O runtime for these search algorithms is linear because we visit each position once,
+ vi. The Big O runtime for these search algorithms is n^2 because we visit each possible pair of points
+ (the current start position and all open positions around it) once,
  and once each of those combinations of position + next position is explored, we don't revisit
  that position. N, the primary input factor increasing the difficulty of the task, is
  the number of open positions on the board. Even if 1 and 2 are very close to each other, the
- search algorithm is going to search every possible path. If there are a lot of open positions
- on the board, then the number of possible paths begins to increase, increasing the difficulty 
- of the search.
+ search algorithm is going to search every possible pair of points along the path. If there are a 
+ lot of open positions on the board, then the number of possible paths begins to increase, increasing 
+ the difficulty of the search.
 
 
 PROGRAM DESIGN AND IMPORTANT CONCEPTS:
