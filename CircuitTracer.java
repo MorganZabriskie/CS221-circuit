@@ -98,27 +98,60 @@ public class CircuitTracer {
 		System.out.println("Starting row is " + startRow);
 		System.out.println("Starting col is: " + startCol);
 
-		//TODO: add check for all open positions
-		TraceState newPath = new TraceState(startingBoard, 0, 1); //TODO: fix so it's all open adjacent to starting point
-		stateStore.store(newPath);
+		// add path to all open positions around start
+		findOpenPaths(startingBoard, startRow, startCol);
+		//TraceState newPath = new TraceState(startingBoard, 0, 1);
+		//stateStore.store(newPath);
 
 		while(!stateStore.isEmpty()) {
 			TraceState currentPath = stateStore.retrieve();
 			System.out.println("Current path is: ");
 			System.out.println(currentPath.getBoard());
+			System.out.println("Current path length is: " + currentPath.pathLength());
+			int currPathStartRow = currentPath.getRow();
+			int currPathStartCol = currentPath.getCol();
+			System.out.println("Current path starting point is " + currPathStartRow + "," + currPathStartCol);
 			if(currentPath.isSolution()) {
+				System.out.println("Current path is a solution!");
 				if(bestPaths.isEmpty() || (currentPath.pathLength() == bestPaths.get(0).pathLength())) { 
 					bestPaths.add(currentPath);
-				} else if (currentPath.pathLength() < bestPaths.get(0).pathLength()) { //TODO: fix length
+				} else if (currentPath.pathLength() < bestPaths.get(0).pathLength()) {
 					bestPaths.clear();
 					bestPaths.add(currentPath);
 				}
-				System.out.println("bestPaths now contains " + bestPaths.toString());
+				System.out.println("bestPaths now contains: " + bestPaths.size() + " paths");
 			} else {
-				//TODO: find all paths and generate new tracestates, adding them to statestorage
+				findOpenPaths(currentPath.getBoard(), currPathStartRow, currPathStartCol);
 			}
+			System.out.println("-------------------");
+			System.out.println();
 		}
 
 	}
 	
+	private void findOpenPaths(CircuitBoard startingBoard, int startRow, int startCol) {
+		if(startingBoard.isOpen((startRow - 1), startCol)) {
+			TraceState newPath = new TraceState(startingBoard, (startRow - 1), startCol);
+			stateStore.store(newPath);
+			System.out.println("Created new path at " + (startRow - 1) + "," + startCol);
+		}
+
+		if (startingBoard.isOpen((startRow + 1), startCol)) {
+			TraceState newPath = new TraceState(startingBoard, (startRow + 1), startCol);
+			stateStore.store(newPath);
+			System.out.println("Created new path at " + (startRow + 1) + "," + startCol);
+		}
+
+		if (startingBoard.isOpen(startRow, (startCol - 1))) {
+			TraceState newPath = new TraceState(startingBoard, startRow, (startCol - 1));
+			stateStore.store(newPath);
+			System.out.println("Created new path at " + startRow + "," + (startCol -1));
+		}
+
+		if (startingBoard.isOpen(startRow, (startCol + 1))) {
+			TraceState newPath = new TraceState(startingBoard, startRow, (startCol + 1));
+			stateStore.store(newPath);
+			System.out.println("Created new path at " + startRow + "," + (startCol + 1));
+		}
+	}
 } // class CircuitTracer
