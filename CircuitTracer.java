@@ -81,9 +81,9 @@ public class CircuitTracer {
         } catch (FileNotFoundException e) {
             System.out.println("File is not found");
         } catch (InvalidFileFormatException e) {
-            System.out.println("File is not in correct format. Please fix and try again.");
+            System.out.println("InvalidFileFormat Exception. File is not in correct format. Please fix and try again.");
         } catch (NoSuchElementException e) {
-            System.out.println("File is not in correct format. Please fix and try again.");
+            System.out.println("NoSuchElementException. File is not in correct format. Please fix and try again.");
         }	
 	}
 
@@ -152,9 +152,9 @@ public class CircuitTracer {
 			//System.out.println();
 		}
 		if(bestPaths.size() == 0) {
-			System.out.println("Search is completed. No solutions found for the given board.");
+			System.out.println();
 		} else {
-			System.out.println("Search is done. " + bestPaths.size() + " solution(s) found. Shortest path is " + bestPaths.get(0).pathLength());
+			//System.out.println("Search is done. " + bestPaths.size() + " solution(s) found. Shortest path is " + bestPaths.get(0).pathLength());
 			for(int i = 0; i < bestPaths.size(); i++) {
 				System.out.println(bestPaths.get(i).toString());
 			}

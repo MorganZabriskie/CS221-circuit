@@ -60,7 +60,7 @@ public class CircuitBoard {
 			String line = fileScan.nextLine();
 			//System.out.println("Data in line " + i + " is " + line);
 			Scanner fileLineScan = new Scanner(line);
-			fileLineScan.useDelimiter("\\s");
+			fileLineScan.useDelimiter("\\s+");
 
 			for (int j = 0; j < COLS; j++) {
 				String nextChar = fileLineScan.next();
@@ -78,7 +78,7 @@ public class CircuitBoard {
 						startingPoint = new Point(i, j);
 					}
 					if(tempChar == END) {
-						endingPoint = new Point(i,j);
+						endingPoint = new Point(i, j);
 					}
 				} else {
 					fileLineScan.close();
