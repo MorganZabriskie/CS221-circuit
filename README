@@ -26,17 +26,6 @@ INCLUDED FILES:
 
 COMPILING AND RUNNING:
 
- Give the command for compiling the program, the command
- for running the program, and any usage instructions the
- user needs.
- 
- These are command-line instructions for a system like onyx.
- They have nothing to do with Eclipse or any other IDE. They
- must be specific - assume the user has Java installed, but
- has no idea how to compile or run a Java program from the
- command-line.
- 
- e.g.
  From the directory containing all source files, compile the
  driver class (and all dependencies) with the command:
  $ javac *.java
@@ -113,54 +102,98 @@ COMPILING AND RUNNING:
 
 PROGRAM DESIGN AND IMPORTANT CONCEPTS:
 
- This is the sort of information someone who really wants to
- understand your program - possibly to make future enhancements -
- would want to know.
+ This program takes in a file from the user as well as inputs on the
+ underlying storage structure to be used. The user could also specify
+ console vs GUI output, but GUI output is not supported in my program.
 
- Explain the main concepts and organization of your program so that
- the reader can understand how your program works. This is not a repeat
- of javadoc comments or an exhaustive listing of all methods, but an
- explanation of the critical algorithms and object interactions that make
- up the program.
+ The CircuitTracer class is the main driver of the program. Once the
+ user has entered a file and choice of storage type, a new CircuitBoard
+ is created in the CircuitBoard class file. The CircuitBoard constructor
+ reads the file and fills in a char[][] with the characters from the
+ file. It makes sure the input has the correct number of rows and columns
+ and also checks that all characters in the file are 'legal'. 
 
- Explain the main responsibilities of the classes and interfaces that make
- up the program. Explain how the classes work together to achieve the program
- goals. If there are critical algorithms that a user should understand, 
- explain them as well.
- 
- If you were responsible for designing the program's classes and choosing
- how they work together, why did you design the program this way? What, if 
- anything, could be improved? 
+ After the initial board is created, the driver class creates an underlying
+ storage structure based on user input (either a stack or a queue). This
+ storage is of class Storage, which is another included class file.
+
+ The driver then calls the brute force search algorithm to find the shortest
+ paths. It does this by creating an ArrayList called bestPath, which will
+ contain the fastest routes the algorithm finds. It also creates stateStore,
+ which is of the storage type specified by the user. All paths that need
+ to be analyzed are kept in stateStore.
+
+ The search algorithm takes the first TraceState from stateStore and checks
+ if it is a solution (adjacent to the ending point 2 on the board). If it is,
+ it checks to see if its path is shorter than or equal to the current paths in
+ bestPaths. If it is shorter, it clears bestPaths and stores the current TraceState.
+ If it is equal, it adds the current TraceState to bestPaths. If it's longer
+ than the bestPaths, then it isn't added.
+
+ If the current TraceState isn't a solution, then we call the findOpenPaths function
+ and generate new TraceStates for any open positions around our current TraceState
+ point. These new TraceStates get added to stateStore. This search continues this
+ process until stateStore is empty and all paths have been explored.
+
+ Once the search is complete, the TraceStates in bestPaths are printed to the console
+ for the user to see the shortest paths to get from 1 to 2.
 
 TESTING:
 
- How did you test your program to be sure it works and meets all of the
- requirements? What was the testing strategy? What kinds of tests were run?
- Can your program handle bad input? Is your program  idiot-proof? How do you 
- know? What are the known issues / bugs remaining in your program?
+My initial testing was through print statements. I started by checking that the constructor
+was reading the given input file correctly by printing the char[][] to the console for 
+me to double check. This also gave me the chance to test that my exceptions were
+being thrown correctly.
 
+I also used print statements to see how my search algorithm was working. I would have the
+current path being analyzed printed to the console, as well as how long the current
+path was and if it was a solution. At the end of each run through the algorithm, I printed
+what was in bestPaths. I tested all given boards (valid and invalid) to check the output
+was what I expected it to be.
+
+After that was working, I used the provided tester to see how my program was working and
+tweaked as needed to get 100% of tests passing.
+
+The program is fairly idiot-proof: if someone puts in the wrong args to the command line
+statement or a file that doesn't exist, a usage error will be printed to the console.
+If the contents of the file aren't right (too short, too long, not the right characters),
+then an error will print out.
 
 DISCUSSION:
  
- Discuss the issues you encountered during programming (development)
- and testing. What problems did you have? What did you have to research
- and learn on your own? What kinds of errors did you get? How did you 
- fix them?
+ The first difficulty I encountered was figuring out how all the provided class files 
+ worked together, so I knew what kind of methods I had to work with and how they
+ should call each other. Handling the file parsing wasn't too hard because I had our
+ warmup assignment as reference. 
+
+ When writing the search algorithm, I ran into a few issues. The first was that when
+ I was keeping track of the path length, it was always giving me a path length of 1. 
+ The program was also storing every path in bestPaths rather than filtering them out
+ for shortest length (because all path lengths were 1). I had a hard time understanding
+ what was going wrong until I realized I was using the wrong constructor when making
+ the next point in the path. I was calling the initial TraceStates constructor rather
+ than calling the constructor for making the next point on the path. Once I fixed that,
+ the search worked really well.
+
+ The other issue I encountered was when I ran the provided tester for the first time. 
+ The .dat files from the tester have a lot of whitespace in them, and my code originally
+ only accounted for one blank space between characters. I did a little research and found
+ that you can add a + to the delimiter statement to get multiple white spaces to be used as
+ the delimiter (for example, a space, space, tab and a space would be treated the same). That
+ was an easier solution than I was expecting.
+
+ The final issue was also when I ran the provided tester. The exceptions I was throwing 
+ weren't what the tester wanted, and I had to tweak my code to catch the right exception. I
+ was letting the program throw and NoSuchElementException instead of explicitly checking that
+ there weren't too few rows or columns in the given file. I add an if statement at the
+ beginning of both for loops when reading the file to check for that and that solved the issue.
  
- What parts of the project did you find challenging? Is there anything
- that finally "clicked" for you in the process of working on this project?
- 
- 
-EXTRA CREDIT:
-
- If the project had opportunities for extra credit that you attempted,
- be sure to call it out so the grader does not overlook it.
-
-
-----------------------------------------------------------------------------
-
-All content in a README file is expected to be written in clear English with
-proper grammar, spelling, and punctuation. If you are not a strong writer,
-be sure to get someone else to help you with proofreading. Consider all project
-documentation to be professional writing for your boss and/or potential
-customers.
+ I enjoyed this assignment, and as always when the tester finally shows 100% it's the best feeling.
+ Doing this assignment highlighted to me how much I've learned this semester. At the beginning
+ of the semester, a project that included this many class files and that had so many moving
+ parts would have been really intimidating. I also noticed that I have a better sense for
+ differentiating different Objects and knowing type of object can call which method. For example,
+ there are times in this code where you need a method in the CircuitBoard class but you're
+ working with a TraceState object, so you have to say traceState.getBoard.(board method) for 
+ the program to work. Those kinds of errors used to really confuse me, but now I understand
+ them better and don't run into them as often.
