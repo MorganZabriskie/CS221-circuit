@@ -79,11 +79,11 @@ public class CircuitTracer {
 			findPath(myBoard, stateStore);
 			// TODO: output results to console or GUI, according to specified choice
         } catch (FileNotFoundException e) {
-            System.out.println("File is not found");
+            System.out.println(e.toString());
         } catch (InvalidFileFormatException e) {
-            System.out.println("InvalidFileFormat Exception. File is not in correct format. Please fix and try again.");
+            System.out.println(e.toString());
         } catch (NoSuchElementException e) {
-            System.out.println("NoSuchElementException. File is not in correct format. Please fix and try again.");
+            System.out.println(e.toString());
         }	
 	}
 

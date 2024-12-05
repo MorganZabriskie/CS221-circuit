@@ -82,20 +82,20 @@ public class CircuitBoard {
 					}
 				} else {
 					fileLineScan.close();
-					throw new InvalidFileFormatException("File contains elements that aren't allowed in circuit board");
+					throw new InvalidFileFormatException("File contains elements that aren't allowed in circuit board. Please fix and try again.");
 				}
 			}
 			//check there aren't more columns than there should be
 			if(fileLineScan.hasNext()) {
 				fileLineScan.close();
-				throw new InvalidFileFormatException("File doesn't have correct format");
+				throw new InvalidFileFormatException("File has too many columns.");
 			}
 			fileLineScan.close();
 		}
 		// check there aren't too many rows
 		if (fileScan.hasNext() || oneCount != 1 || twoCount != 1) {
 			fileScan.close();
-			throw new InvalidFileFormatException("File doesn't have correct format");
+			throw new InvalidFileFormatException("File has too many rows.");
 		}
 
 		fileScan.close();

@@ -1,7 +1,0 @@
-Usage: $ java CircuitTracer [-s | -q] [-c | -g]
-	 First argument:
-		 -s --use a stack for storage
-		 -q --use a queue for storage
-	 Second argument:
-		 -c --run program in console mode
-		 -g --run program in GUI mode
