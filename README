@@ -1,25 +1,26 @@
 ****************
-* Project number/name
-* Class
-* Date
-* Your name
+* Circuit
+* CS 221
+* 12/5/24
+* Morgan Zabriskie
 **************** 
 
 OVERVIEW:
 
- Concisely explain what the program does. If this exceeds a couple
- of sentences, you're going too far. The details go in other
- sections.
+ The CircuitTracer programs takes in a circuit board schematic
+ from the user and does a brute-search force to find the 
+ quickest path from the starting point (1) to the ending point (2).
+ It prints out the fastest paths to the user.
 
 
 INCLUDED FILES:
 
- List the files required for the project with a brief
- explanation of why each is included.
-
- e.g.
- * Class1.java - source file
- * Class2.java - source file
+ * CircuitTracer.java - the driver file
+ * CircuitBoard.java - the Circuit Board class file
+ * TraceState.java - the TraceState class file
+ * Storage.java - the Storage class file
+ * InvalidFileFormatException.java - file formatting error class file
+ * OccupiedPositionException.java - class file for Occupied Position error
  * README - this file
 
 
@@ -38,10 +39,17 @@ COMPILING AND RUNNING:
  e.g.
  From the directory containing all source files, compile the
  driver class (and all dependencies) with the command:
- $ javac Class1.java
+ $ javac *.java
 
  Run the compiled class file with the command:
- $ java Class1
+ $ java CircuitTracer [-s | -q] [-c | -g] filename
+    First argument:
+        -s -- use a stack for storage
+        -q -- use a queue for storage
+
+    Second argument:
+        -c --run program in console mode
+        -g --run program in GUI mode
 
  Console output will give the results after the program finishes.
 

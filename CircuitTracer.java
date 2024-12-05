@@ -30,7 +30,7 @@ public class CircuitTracer {
 
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
-		System.out.println("Usage: $ java CircuitTracer [-s | -q] [-c | -g]");
+		System.out.println("Usage: $ java CircuitTracer [-s | -q] [-c | -g] filename");
 		System.out.println("\t First argument:");
 		System.out.println("\t\t -s --use a stack for storage");
 		System.out.println("\t\t -q --use a queue for storage");
