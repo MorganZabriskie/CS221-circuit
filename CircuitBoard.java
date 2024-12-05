@@ -46,9 +46,18 @@ public class CircuitBoard {
 		Scanner fileScan = new Scanner(new File(filename));
 
 		// initialize rows and columns from input file
-		ROWS = fileScan.nextInt();
+		if(!fileScan.hasNextInt()) {
+			throw new InvalidFileFormatException("Row number is not in correct format.");
+		} else {
+			ROWS = fileScan.nextInt();
+		}
 		//System.out.println("Num rows is " + ROWS);
-		COLS = fileScan.nextInt();
+
+		if(!fileScan.hasNextInt()) {
+			throw new InvalidFileFormatException("Column number is not in correct format.");
+		} else {
+			COLS = fileScan.nextInt();
+		}
 		//System.out.println("Num cols is " + COLS);
 		fileScan.nextLine();
 		board = new char[ROWS][COLS];
@@ -57,12 +66,19 @@ public class CircuitBoard {
 
 		// read each row and store each character in the char[][]
 		for(int i = 0; i < ROWS; i++) {
+			if(!fileScan.hasNextLine()) {
+				throw new InvalidFileFormatException("File does not contain the correct number of rows.");
+			}
 			String line = fileScan.nextLine();
 			//System.out.println("Data in line " + i + " is " + line);
 			Scanner fileLineScan = new Scanner(line);
 			fileLineScan.useDelimiter("\\s+");
 
 			for (int j = 0; j < COLS; j++) {
+				if(!fileLineScan.hasNext()) {
+					fileLineScan.close();
+					throw new InvalidFileFormatException("Row " + i + " does not have enough columns.");
+				}
 				String nextChar = fileLineScan.next();
 				char tempChar = nextChar.charAt(0);
 				//System.out.println("Char at column " + j + " is " + tempChar);
