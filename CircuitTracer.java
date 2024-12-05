@@ -77,17 +77,22 @@ public class CircuitTracer {
 
 			// run the search for best paths
 			findPath(myBoard, stateStore);
-			// TODO: output results to console or GUI, according to specified choice
         } catch (FileNotFoundException e) {
             System.out.println(e.toString());
         } catch (InvalidFileFormatException e) {
             System.out.println(e.toString());
         } catch (NoSuchElementException e) {
-            System.out.println("InvalidFileFormatException: Not enough elements in file");
+            System.out.println(e.toString());
         }	
 	}
 
-	//TODO: write method for search algorithm
+	/**
+	 * Use the brute search algorithm to find the shortest path between two points.
+	 * The method saves all the shortest paths in the bestPaths list.
+	 * @param startingBoard circuit board without any traces
+	 * @param stateStore underlying storage structure, either stack or queue (decided by user)
+	 * 
+	 */
 	private void findPath(CircuitBoard startingBoard, Storage<TraceState> stateStore) {
 		// initialize empty list
 		List<TraceState> bestPaths = new ArrayList<TraceState>();
@@ -160,6 +165,15 @@ public class CircuitTracer {
 			}
 		}
 	}
+
+	/**
+	 * Method to find all open spots next to a given point. Used to trace a path
+	 * through the given board
+	 * @param currentPath
+	 * @param startRow
+	 * @param startCol
+	 * 
+	 */
 	
 	private void findOpenPaths(TraceState currentPath, int startRow, int startCol) {
 		if(currentPath.getBoard().isOpen((startRow - 1), startCol)) {
@@ -186,4 +200,4 @@ public class CircuitTracer {
 			//System.out.println("Created new path at " + startRow + "," + (startCol + 1));
 		}
 	}
-} // class CircuitTracer
+} 
