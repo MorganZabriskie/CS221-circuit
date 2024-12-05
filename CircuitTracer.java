@@ -83,7 +83,7 @@ public class CircuitTracer {
         } catch (InvalidFileFormatException e) {
             System.out.println(e.toString());
         } catch (NoSuchElementException e) {
-            System.out.println(e.toString());
+            System.out.println("InvalidFileFormatException: Not enough elements in file");
         }	
 	}
 
