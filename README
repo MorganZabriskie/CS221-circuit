@@ -97,7 +97,7 @@ COMPILING AND RUNNING:
  analysis, you will have many branches of the possible paths that you could take.
 
  vi. The Big O runtime for these search algorithms is n^2 because we visit each possible pair of points
- (the current start position and all open positions around it) once,
+ (the current start position (n) and all open positions (n) around it) once which is n^2,
  and once each of those combinations of position + next position is explored, we don't revisit
  that position. N, the primary input factor increasing the difficulty of the task, is
  the number of open positions on the board. Even if 1 and 2 are very close to each other, the
